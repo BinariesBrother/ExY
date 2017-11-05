@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <md-toolbar class="md-transparent exy-toolbar app-draggable">
-      <md-button class="md-icon-button">
-        <md-icon class="icon-collapsible">keyboard_capslock</md-icon>
+      <md-button class="md-icon-button" @click="toggleDrawerCollapse">
+        <md-icon class="icon-collapsible" :class="{ collapsed: drawerCollapsed }">keyboard_capslock</md-icon>
       </md-button>
       <span style="flex: 1;"></span>
       <md-button class="md-icon-button" @click="minimize">
@@ -15,8 +15,10 @@
         <md-icon>close</md-icon>
       </md-button>
     </md-toolbar>
-    <div class="main-content">
+    <div class="main-content" :class="{ 'drawer-is-collapsed': drawerCollapsed }">
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem consectetur eos facilis fugit harum itaque qui reprehenderit tempore voluptatem! Aliquam minima quae quis reprehenderit voluptatum. Eum explicabo nostrum possimus repellat.
+    </div>
+    <div class="navigation-drawer" :class="{ collapsed: drawerCollapsed }">
     </div>
   </div>
 </template>
@@ -25,13 +27,14 @@
   const electron = require('electron')
   const {remote} = electron
   const windowManager = remote.require('electron-window-manager')
-//  import LandingPage from '@/components/LandingPage'
 
   export default {
     name: 'exy',
-//    components: {
-//      LandingPage
-//    }
+    data() {
+      return {
+        drawerCollapsed: false,
+      }
+    },
     methods: {
       minimize() {
         windowManager.minimize('main')
@@ -45,15 +48,23 @@
         windowManager.close('main')
       },
 
+      toggleDrawerCollapse() {
+        this.drawerCollapsed = !this.drawerCollapsed
+      }
+
     }
   }
 </script>
 
 <style lang="scss">
+  $toolbarHeight: 44px;
+  $drawerWidth: 280px;
+  $drawerWidthCollapsed: 50px;
+
   .icon-collapsible {
     transform: rotate(-90deg);
     transition: transform 0.3s linear;
-    .collapsed {
+    &.collapsed {
       transform: rotate(90deg);
     }
   }
@@ -77,7 +88,7 @@
   .exy-toolbar {
     position: relative;
     font-size: 16px;
-    min-height: 44px;
+    min-height: $toolbarHeight;
 
     &:after {
       content: '';
@@ -99,9 +110,36 @@
     }
   }
 
-  // TODO Remove the below style.
+  .navigation-drawer {
+    position: absolute;
+    top: $toolbarHeight;
+    left: 0;
+    width: $drawerWidth;
+    height: calc(100vh - #{$toolbarHeight});
+    background-color: white;
+    overflow-x: hidden;
+    transition: width 0.3s linear;
+    border-right: 1px solid #424242;
+
+    &.collapsed {
+      width: $drawerWidthCollapsed;
+
+      &:hover {
+        width: $drawerWidth;
+      }
+    }
+  }
+
   .main-content {
     padding: 32px;
     box-sizing: border-box;
+    height: calc(100vh - #{$toolbarHeight});
+    overflow-y: auto;
+    margin-left: $drawerWidth;
+    transition: margin-left 0.3s linear;
+
+    &.drawer-is-collapsed {
+      margin-left: $drawerWidthCollapsed;
+    }
   }
 </style>
