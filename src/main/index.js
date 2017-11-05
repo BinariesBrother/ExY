@@ -63,9 +63,18 @@ function createWindow () {
 
   mainWindow.open()
 
-  if (mainWindowState && mainWindowState.maximize) {
+  if (mainWindowState && mainWindowState.maximized) {
     mainWindow.object.maximize()
   }
+
+  mainWindow.object.on('close', () => {
+    const currentDisplay = screen.getDisplayNearestPoint(screen.getCursorScreenPoint())
+    config.set('mainWindowState', {
+      maximized: mainWindow.object.isMaximized(),
+      bounds: mainWindow.object.getBounds(),
+      display: currentDisplay.id,
+    })
+  })
 
   mainWindow.object.on('closed', () => {
     mainWindow = null

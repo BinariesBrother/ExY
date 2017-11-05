@@ -23,11 +23,8 @@
 
 <script>
   const electron = require('electron')
-  const {screen, remote} = electron
+  const {remote} = electron
   const windowManager = remote.require('electron-window-manager')
-  const Config = remote.require('electron-config')
-
-  const config = new Config()
 //  import LandingPage from '@/components/LandingPage'
 
   export default {
@@ -45,13 +42,6 @@
       },
 
       close() {
-        const currentDisplay = screen.getDisplayNearestPoint(screen.getCursorScreenPoint())
-        const main = windowManager.get('main')
-        config.set('mainWindowState', {
-          maximize: main.object.isMaximized(),
-          bounds: main.object.getBounds(),
-          display: currentDisplay.id,
-        })
         windowManager.close('main')
       },
 
