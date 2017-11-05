@@ -1,0 +1,46 @@
+
+// Button focus.
+button:after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0%;
+  height: 0%;
+  transform: translate(-50%, -50%);
+  background-color: transparent;
+  border-radius: 50%;
+}
+
+button:focus:after {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(#424242, 0.3);
+  transform: translate(-50%, -50%);
+}
+
+// Resize md-icon and md-icon-button.
+.md-button.md-icon-button {
+  min-width: 30px;
+  width: 30px;
+  min-height: 30px;
+  height: 30px;
+}
+
+.md-icon {
+  font-size: 16px;
+  min-height: 16px;
+  height: 16px;
+  width: 16px;
+  min-width: 16px;
+}
+
+// The selected elements are draggable by the user to move the window.
+.app-draggable {
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+
+  input, button, a, select {
+    -webkit-app-region: no-drag;
+  }
+}

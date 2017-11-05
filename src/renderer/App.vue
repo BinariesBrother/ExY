@@ -57,28 +57,9 @@
 </script>
 
 <style lang="scss">
-  $toolbarHeight: 44px;
-  $drawerWidth: 280px;
-  $drawerWidthCollapsed: 50px;
+  @import '~@/assets/scss/variables';
+  @import '~@/assets/scss/theme';
 
-  button:after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0%;
-    height: 0%;
-    transform: translate(-50%, -50%);
-    background-color: transparent;
-    border-radius: 50%;
-  }
-
-  button:focus:after {
-    width: 100%;
-    height: 100%;
-    background-color: rgba(#424242, 0.3);
-    transform: translate(-50%, -50%);
-  }
 
   .icon-collapsible {
     transform: rotate(-90deg);
@@ -86,22 +67,6 @@
     &.collapsed {
       transform: rotate(90deg);
     }
-  }
-
-  // Resize md-icon and md-icon-button.
-  .md-button.md-icon-button {
-    min-width: 30px;
-    width: 30px;
-    min-height: 30px;
-    height: 30px;
-  }
-
-  .md-icon {
-    font-size: 16px;
-    min-height: 16px;
-    height: 16px;
-    width: 16px;
-    min-width: 16px;
   }
 
   .exy-toolbar {
@@ -120,15 +85,6 @@
     }
   }
 
-  .app-draggable {
-    -webkit-user-select: none;
-    -webkit-app-region: drag;
-
-    input, button, a, select {
-      -webkit-app-region: no-drag;
-    }
-  }
-
   .navigation-drawer {
     position: absolute;
     top: $toolbarHeight;
@@ -141,7 +97,7 @@
     border-right: 1px solid #424242;
 
     &.collapsed {
-      width: $drawerWidthCollapsed;
+      width: $drawerCollapsedWidth;
 
       &:hover {
         width: $drawerWidth;
@@ -158,7 +114,7 @@
     transition: margin-left 0.3s linear;
 
     &.drawer-is-collapsed {
-      margin-left: $drawerWidthCollapsed;
+      margin-left: $drawerCollapsedWidth;
     }
   }
 </style>
