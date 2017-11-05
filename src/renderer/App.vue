@@ -58,6 +58,22 @@
     }
   }
 
+  // Resize md-icon and md-icon-button.
+  .md-button.md-icon-button {
+    min-width: 30px;
+    width: 30px;
+    min-height: 30px;
+    height: 30px;
+  }
+
+  .md-icon {
+    font-size: 16px;
+    min-height: 16px;
+    height: 16px;
+    width: 16px;
+    min-width: 16px;
+  }
+
   .exy-toolbar {
     position: relative;
     font-size: 16px;
@@ -71,21 +87,6 @@
       height: 1px;
       width: 100%;
       background: linear-gradient(to right, #424242, transparent);
-    }
-
-    .md-button.md-icon-button {
-      min-width: 30px;
-      width: 30px;
-      min-height: 30px;
-      height: 30px;
-    }
-
-    .md-icon {
-      font-size: 16px;
-      min-height: 16px;
-      height: 16px;
-      width: 16px;
-      min-width: 16px;
     }
   }
 
