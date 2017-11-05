@@ -63,6 +63,10 @@ function createWindow () {
 
   mainWindow.open()
 
+  mainWindow.registerShortcut('CmdOrCtrl+Q', () => {
+    mainWindow.close()
+  })
+
   if (mainWindowState && mainWindowState.maximized) {
     mainWindow.object.maximize()
   }

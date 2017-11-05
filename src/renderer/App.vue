@@ -1,17 +1,17 @@
 <template>
   <div id="app">
     <md-toolbar class="md-transparent exy-toolbar app-draggable">
-      <md-button class="md-icon-button" @click="toggleDrawerCollapse">
+      <md-button class="md-icon-button" @click="toggleDrawerCollapse" title="Collapsed the playlists">
         <md-icon class="icon-collapsible" :class="{ collapsed: drawerCollapsed }">keyboard_capslock</md-icon>
       </md-button>
       <span style="flex: 1;"></span>
-      <md-button class="md-icon-button" @click="minimize">
+      <md-button class="md-icon-button" @click="minimize" title="Minimize">
         <md-icon>remove</md-icon>
       </md-button>
-      <md-button class="md-icon-button" @click="toggleMaximize">
+      <md-button class="md-icon-button" @click="toggleMaximize" title="Maximize">
         <md-icon>crop_square</md-icon>
       </md-button>
-      <md-button class="md-icon-button" @click="close">
+      <md-button class="md-icon-button" @click="close" title="Quit ExY">
         <md-icon>close</md-icon>
       </md-button>
     </md-toolbar>
@@ -61,6 +61,25 @@
   $drawerWidth: 280px;
   $drawerWidthCollapsed: 50px;
 
+  button:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0%;
+    height: 0%;
+    transform: translate(-50%, -50%);
+    background-color: transparent;
+    border-radius: 50%;
+  }
+
+  button:focus:after {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(#424242, 0.3);
+    transform: translate(-50%, -50%);
+  }
+
   .icon-collapsible {
     transform: rotate(-90deg);
     transition: transform 0.3s linear;
@@ -105,7 +124,7 @@
     -webkit-user-select: none;
     -webkit-app-region: drag;
 
-    button {
+    input, button, a, select {
       -webkit-app-region: no-drag;
     }
   }
