@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <md-toolbar class="md-transparent exy-toolbar app-draggable">
+    <md-toolbar class="md-transparent exy-toolbar app-draggable" style="z-index: 1000">
       <md-button class="md-icon-button" @click="toggleDrawerCollapse" title="Collapsed the playlists">
         <md-icon class="icon-collapsible" :class="{ collapsed: drawerCollapsed }">keyboard_capslock</md-icon>
       </md-button>
@@ -20,18 +20,26 @@
     </div>
     <div class="navigation-drawer" :class="{ collapsed: drawerCollapsed }">
     </div>
+    <div class="bottom-drawer"></div>
+    <!--<Loader></Loader>-->
   </div>
 </template>
 
 <script>
-  const electron = require('electron')
+  import Loader from './components/Loader'
+  import electron from 'electron'
+//  const electron = require('electron')
   const {remote} = electron
   const windowManager = remote.require('electron-window-manager')
 
   export default {
     name: 'exy',
+    components: {
+      Loader
+    },
     data() {
       return {
+        connected: false,
         drawerCollapsed: false,
       }
     },
@@ -115,6 +123,21 @@
 
     &.drawer-is-collapsed {
       margin-left: $drawerCollapsedWidth;
+    }
+  }
+
+  .bottom-drawer {
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+    padding: 32px;
+    background-color: rgba(0,0,0,0.6);
+    transform: translateY(50%);
+    transition: transform 0.3s linear;
+    color: white;
+
+    &:hover {
+      transform: translateY(0%);
     }
   }
 </style>
