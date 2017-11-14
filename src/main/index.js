@@ -1,10 +1,9 @@
 import { app, screen } from 'electron'
 import windowManager from 'electron-window-manager'
 import Config from 'electron-config'
+import {initSidePlayer} from './side-player'
 
 const electron = require('electron');
-const BrowserWindow = electron.BrowserWindow;
-const ipc = electron.ipcMain;
 const config = new Config()
 
 /**
@@ -15,22 +14,7 @@ if (process.env.NODE_ENV !== 'development') {
   global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
 }
 
-
-
-let side_player_window;
-// bind side-player opening event
-ipc.on('side-player/open', () => {
-  let url = process.env.NODE_ENV === 'development'
-    ? `http://localhost:9080/side-player.html`
-    : `file://${__dirname}/side-player.html`
-  side_player_window = new BrowserWindow({width: 500, height: 500*9/16});
-  side_player_window.loadURL(url);
-  side_player_window.on('closed', () => {
-    side_player_window = null;
-  })
-});
-
-
+initSidePlayer()
 
 
 let mainWindow

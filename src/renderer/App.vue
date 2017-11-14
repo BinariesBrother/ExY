@@ -17,6 +17,8 @@
     </md-toolbar>
     <div class="main-content" :class="{ 'drawer-is-collapsed': drawerCollapsed }">
       <button @click="openSidePlayer">SIDE PLAYER</button>
+      <button @click="closeSidePlayer">CLOSE PLAYER</button>
+      <button @click="toggleSidePlayerPlay">TOGGLE PLAY</button>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem consectetur eos facilis fugit harum itaque qui reprehenderit tempore voluptatem! Aliquam minima quae quis reprehenderit voluptatum. Eum explicabo nostrum possimus repellat.
     </div>
     <div class="navigation-drawer" :class="{ collapsed: drawerCollapsed }">
@@ -64,6 +66,14 @@
 
       openSidePlayer() {
         ipc.send('side-player/open')
+      },
+
+      closeSidePlayer() {
+        ipc.send('side-player/close')
+      },
+
+      toggleSidePlayerPlay() {
+        ipc.send('side-player/toggle-play')
       }
 
     }

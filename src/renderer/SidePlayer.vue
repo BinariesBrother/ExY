@@ -1,12 +1,13 @@
 <template>
   <div id="side_player">
-    <h1>Side Player Component</h1>
-    <youtube :video-id="videoId" @ready="ready" @playing="playing"></youtube>
+    <youtube :video-id="videoId" @ready="ready"></youtube>
   </div>
 </template>
 <script>
   import Vue from 'vue'
   import VueYouTubeEmbed from 'vue-youtube-embed'
+  const ipc = require('electron').ipcRenderer;
+
   Vue.use(VueYouTubeEmbed)
 
   export default {
@@ -19,10 +20,27 @@
     methods: {
       ready(player) {
         this.player = player
+        ipc.on('side-player/toggle-play', () => {
+          this.togglePlay();
+        })
+      },
+      togglePlay() {
+        if ( this.player.getPlayerState() == 1 ) { // if playing
+          this.player.pauseVideo();
+        }
+        else if ( this.player.getPlayerState() == 2 || this.player.getPlayerState() == 5 ) { // if paused
+          this.player.playVideo();
+        }
       }
     }
   }
 </script>
 <style>
-
+  #side_player {
+    width: 100%;
+    min-height: 100vh;
+    margin:0;
+    padding:0;
+    background-color: black;
+  }
 </style>
