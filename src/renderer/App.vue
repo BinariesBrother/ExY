@@ -16,6 +16,7 @@
       </md-button>
     </md-toolbar>
     <div class="main-content" :class="{ 'drawer-is-collapsed': drawerCollapsed }">
+      <button @click="openSidePlayer">SIDE PLAYER</button>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem consectetur eos facilis fugit harum itaque qui reprehenderit tempore voluptatem! Aliquam minima quae quis reprehenderit voluptatum. Eum explicabo nostrum possimus repellat.
     </div>
     <div class="navigation-drawer" :class="{ collapsed: drawerCollapsed }">
@@ -31,6 +32,7 @@
 //  const electron = require('electron')
   const {remote} = electron
   const windowManager = remote.require('electron-window-manager')
+  const ipc = require('electron').ipcRenderer;
 
   export default {
     name: 'exy',
@@ -58,6 +60,10 @@
 
       toggleDrawerCollapse() {
         this.drawerCollapsed = !this.drawerCollapsed
+      },
+
+      openSidePlayer() {
+        ipc.send('side-player/open')
       }
 
     }
