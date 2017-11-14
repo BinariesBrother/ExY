@@ -19,6 +19,7 @@
       <button @click="openSidePlayer">SIDE PLAYER</button>
       <button @click="closeSidePlayer">CLOSE PLAYER</button>
       <button @click="toggleSidePlayerPlay">TOGGLE PLAY</button>
+      <button @click="changeVideo">CHANGE VIDEO</button>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem consectetur eos facilis fugit harum itaque qui reprehenderit tempore voluptatem! Aliquam minima quae quis reprehenderit voluptatum. Eum explicabo nostrum possimus repellat.
     </div>
     <div class="navigation-drawer" :class="{ collapsed: drawerCollapsed }">
@@ -74,6 +75,10 @@
 
       toggleSidePlayerPlay() {
         ipc.send('side-player/toggle-play')
+      },
+
+      changeVideo() {
+        ipc.send('side-player/change-video', 'i4HMVxE7las')
       }
 
     }

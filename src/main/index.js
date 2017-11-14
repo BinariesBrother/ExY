@@ -1,9 +1,10 @@
 import { app, screen } from 'electron'
 import windowManager from 'electron-window-manager'
 import Config from 'electron-config'
-import {initSidePlayer} from './side-player'
+import {initSidePlayer, closePlayer} from './side-player'
 
 const electron = require('electron');
+const ipc = electron.ipcMain;
 const config = new Config()
 
 /**
@@ -86,6 +87,7 @@ function createWindow () {
   })
 
   mainWindow.object.on('closed', () => {
+    closePlayer();
     mainWindow = null
   })
 

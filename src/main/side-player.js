@@ -3,7 +3,7 @@ const electron = require('electron');
 const ipc = electron.ipcMain;
 const BrowserWindow = electron.BrowserWindow;
 
-let side_player_window;
+var side_player_window = null;
 
 export function initSidePlayer() {
   // bind side-player opening event
@@ -32,14 +32,21 @@ export function initSidePlayer() {
     })
   });
   ipc.on('side-player/close', () => {
-    if ( side_player_window ) {
-      side_player_window.close();
-      side_player_window = null;  
-    }
+    closePlayer();
   });
   ipc.on('side-player/toggle-play', () => {
     if ( side_player_window ) {
       side_player_window.webContents.send('side-player/toggle-play');
     }
   });
+  ipc.on('side-player/change-video', (data,arg) => {
+    side_player_window.webContents.send('side-player/change-video',arg);
+  })
+}
+
+export function closePlayer() {
+  if ( side_player_window ) {
+    side_player_window.close();
+    side_player_window = null;
+  }
 }

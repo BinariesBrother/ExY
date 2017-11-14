@@ -23,6 +23,9 @@
         ipc.on('side-player/toggle-play', () => {
           this.togglePlay();
         })
+        ipc.on('side-player/change-video', (data,arg) => {
+          this.videoId = arg;
+        })
       },
       togglePlay() {
         if ( this.player.getPlayerState() == 1 ) { // if playing
