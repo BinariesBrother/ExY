@@ -4,6 +4,11 @@
   </div>
 </template>
 <script>
+  /*
+    SidePlayer component reacts to electron IPC messages.
+     - 'side-player/toggle-play'
+     - 'side-player/change-video','[VIDEO-ID]'
+  */
   import Vue from 'vue'
   import VueYouTubeEmbed from 'vue-youtube-embed'
   const ipc = require('electron').ipcRenderer;
