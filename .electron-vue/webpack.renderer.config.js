@@ -64,30 +64,30 @@ let rendererConfig = {
         }
       },
       {
-        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+        test: /\.(png|jpe?g|gif|svg)$/,
         use: {
           loader: 'url-loader',
           query: {
             limit: 10000,
-            name: 'imgs/[name]--[folder].[ext]'
+            name: 'imgs/[name].[ext]'
           }
         }
       },
       {
-        test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
+        test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)$/,
         loader: 'url-loader',
         options: {
           limit: 10000,
-          name: 'media/[name]--[folder].[ext]'
+          name: 'media/[name].[ext]'
         }
       },
       {
-        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+        test: /\.(woff2?|eot|ttf|otf)$/,
         use: {
           loader: 'url-loader',
           query: {
             limit: 10000,
-            name: 'fonts/[name]--[folder].[ext]'
+            name: 'fonts/[name].[ext]'
           }
         }
       }
@@ -141,16 +141,6 @@ let rendererConfig = {
   target: 'electron-renderer'
 }
 
-/**
- * Adjust rendererConfig for development settings
- */
-if (process.env.NODE_ENV !== 'production') {
-  rendererConfig.plugins.push(
-    new webpack.DefinePlugin({
-      '__static': `"${path.join(__dirname, '../static').replace(/\\/g, '\\\\')}"`
-    })
-  )
-}
 
 /**
  * Adjust rendererConfig for production settings
@@ -160,13 +150,6 @@ if (process.env.NODE_ENV === 'production') {
 
   rendererConfig.plugins.push(
     new BabiliWebpackPlugin(),
-    new CopyWebpackPlugin([
-      {
-        from: path.join(__dirname, '../static'),
-        to: path.join(__dirname, '../dist/electron/static'),
-        ignore: ['.*']
-      }
-    ]),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"'
     }),

@@ -3,6 +3,7 @@ import windowManager from 'electron-window-manager'
 import Config from 'electron-config'
 import {initSidePlayer, closePlayer} from './side-player'
 import path from 'path';
+import logo from './assets/logo.png';
 
 const electron = require('electron');
 const ipc = electron.ipcMain;
@@ -38,15 +39,14 @@ function createWindow () {
     y: parseInt(primaryDisplay.workArea.y + ((primaryDisplay.workArea.height / 2) - (defaultHeight / 2))),
   }
 
-  // const logoUrl = process.env.NODE_ENV === 'development'
-  //   ? `http://localhost:9080/${logo}`
-  //   : `file://${__dirname}/${logo}`;
+  const logoUrl = path.resolve(`${__dirname}/../../dist/electron/${logo}`);
 
   let options = {
     minHeight: 400,
     minWidth: 600,
     frame: false,
-    resizable: true
+    resizable: true,
+    icon: logoUrl
   };
 
   Object.assign(options, mainWindowDefaultBounds)
