@@ -2,10 +2,12 @@ import { app, screen } from 'electron'
 import windowManager from 'electron-window-manager'
 import Config from 'electron-config'
 import {initSidePlayer, closePlayer} from './side-player'
+import path from 'path';
 
 const electron = require('electron');
 const ipc = electron.ipcMain;
 const config = new Config()
+
 
 /**
  * Set `__static` path to static files in production
@@ -14,8 +16,6 @@ const config = new Config()
 if (process.env.NODE_ENV !== 'development') {
   global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
 }
-
-initSidePlayer()
 
 
 let mainWindow
@@ -38,12 +38,16 @@ function createWindow () {
     y: parseInt(primaryDisplay.workArea.y + ((primaryDisplay.workArea.height / 2) - (defaultHeight / 2))),
   }
 
+  // const logoUrl = process.env.NODE_ENV === 'development'
+  //   ? `http://localhost:9080/${logo}`
+  //   : `file://${__dirname}/${logo}`;
+
   let options = {
     minHeight: 400,
     minWidth: 600,
     frame: false,
-    resizable: true,
-  }
+    resizable: true
+  };
 
   Object.assign(options, mainWindowDefaultBounds)
 
@@ -62,10 +66,9 @@ function createWindow () {
         }
       }
     }
-
   }
 
-  mainWindow = windowManager.createNew('main', 'ExY', winURL, false, options, false)
+  mainWindow = windowManager.createNew('main', 'ExY', winURL, false, options, false);
 
   mainWindow.open()
 
@@ -90,6 +93,8 @@ function createWindow () {
     closePlayer();
     mainWindow = null
   })
+
+  initSidePlayer();
 
 }
 

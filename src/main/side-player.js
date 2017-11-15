@@ -35,22 +35,22 @@ export function initSidePlayer() {
 export function openPlayer() {
   if ( !side_player_window ) {
     var size = electron.screen.getPrimaryDisplay().workAreaSize;
-    let width = 800;
-    let height = width*9/16;
+    let w = 500;
+    let h = Math.round(w*9/16);
+    console.log(h);
 
     let url = process.env.NODE_ENV === 'development'
       ? `http://localhost:9080/side-player.html`
       : `file://${__dirname}/side-player.html`
     side_player_window = new BrowserWindow({
-      width: width,
-      height: height,
-      x: size.width-width,
-      //y: size.height-height,
+      width: w,
+      height: h,
+      x: size.width-w,
+      //y: size.height-h,
       y: 0,
       alwaysOnTop: true,
       frame:false,
       focusable: false
-
     });
     side_player_window.loadURL(url);
     side_player_window.on('closed', () => {
