@@ -30,7 +30,7 @@
 </template>
 
 <script>
-  import Loader from './components/Loader'
+  import Loader from './Loader'
   import electron from 'electron'
 //  const electron = require('electron')
   const {remote} = electron

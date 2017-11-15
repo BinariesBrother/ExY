@@ -2,8 +2,8 @@ import Vue from 'vue'
 import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.css'
 
-import App from './App'
-import SidePlayer from './SidePlayer'
+import App from './components/App'
+import SidePlayer from './components/SidePlayer'
 
 Vue.use(VueMaterial)
 
