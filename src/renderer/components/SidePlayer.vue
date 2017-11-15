@@ -11,7 +11,15 @@
   */
   import Vue from 'vue'
   import VueYouTubeEmbed from 'vue-youtube-embed'
-  const ipc = require('electron').ipcRenderer;
+  const electron = require('electron');
+  const ipc = electron.ipcRenderer;
+  const remote = electron.remote;
+  const windowManager = remote.require('electron-window-manager');
+
+  function reactEvent(ev, fun) {
+    ipc.on(ev, fun); // react from server events
+    windowManager.bridge.on(ev, fun); // react from client events
+  }
 
   Vue.use(VueYouTubeEmbed)
 
@@ -24,13 +32,15 @@
     },
     methods: {
       ready(player) {
-        this.player = player
-        ipc.on('side-player/toggle-play', () => {
+        this.player = player;
+
+        reactEvent('side-player/toggle-play', (data,arg) => {
           this.togglePlay();
-        })
-        ipc.on('side-player/change-video', (data,arg) => {
+        });
+        reactEvent('side-player/change-video', (data,arg) => {
           this.videoId = arg;
-        })
+        });
+
       },
       togglePlay() {
         if ( this.player.getPlayerState() == 1 ) { // if playing

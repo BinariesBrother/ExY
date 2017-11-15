@@ -33,8 +33,8 @@
   import Loader from './Loader'
   import electron from 'electron'
 //  const electron = require('electron')
-  const {remote} = electron
-  const windowManager = remote.require('electron-window-manager')
+  const remote = electron.remote;
+  const windowManager = remote.require('electron-window-manager');
   const ipc = require('electron').ipcRenderer;
 
   export default {
@@ -74,11 +74,13 @@
       },
 
       toggleSidePlayerPlay() {
-        ipc.send('side-player/toggle-play')
+        // windowManager.bridge.emit('side-player/toggle-play');
+        ipc.send('side-player/toggle-play');
       },
 
       changeVideo() {
-        ipc.send('side-player/change-video', 'i4HMVxE7las')
+        // windowManager.bridge.emit('side-player/change-video', 'i4HMVxE7las', 'side-player');
+        ipc.send('side-player/change-video', 'i4HMVxE7las');
       }
 
     }

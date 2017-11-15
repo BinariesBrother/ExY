@@ -13,8 +13,8 @@
 const electron = require('electron');
 const ipc = electron.ipcMain;
 const BrowserWindow = electron.BrowserWindow;
+import windowManager from 'electron-window-manager'
 
-let side_player_window = null;
 
 export function initSidePlayer() {
   // bind side-player opening event
@@ -33,16 +33,12 @@ export function initSidePlayer() {
 }
 
 export function openPlayer() {
-  if ( !side_player_window ) {
+  if ( !windowManager.get("side-player") ) {
     var size = electron.screen.getPrimaryDisplay().workAreaSize;
     let w = 500;
     let h = Math.round(w*9/16);
-    console.log(h);
 
-    let url = process.env.NODE_ENV === 'development'
-      ? `http://localhost:9080/side-player.html`
-      : `file://${__dirname}/side-player.html`
-    side_player_window = new BrowserWindow({
+    let options = {
       width: w,
       height: h,
       x: size.width-w,
@@ -51,29 +47,35 @@ export function openPlayer() {
       alwaysOnTop: true,
       frame:false,
       focusable: false
-    });
-    side_player_window.loadURL(url);
-    side_player_window.on('closed', () => {
-      side_player_window = null;
-    })
+    };
+
+    let url = process.env.NODE_ENV === 'development'
+      ? `http://localhost:9080/side-player.html`
+      : `file://${__dirname}/side-player.html`
+    ;
+
+    let side_player_window = windowManager.createNew('side-player', 'ExY (side player)', url, false, options, false);
+    side_player_window.open()
+
   }
 }
 
 export function closePlayer() {
-  if ( side_player_window ) {
-    side_player_window.close();
-    side_player_window = null;
+  if ( windowManager.get("side-player") ) {
+    windowManager.close('side-player');
   }
 }
 
 export function togglePlay() {
-  if ( side_player_window ) {
-    side_player_window.webContents.send('side-player/toggle-play');
+  let w = windowManager.get('side-player');
+  if ( w ) {
+    w.object.webContents.send('side-player/toggle-play');
   }
 }
 
 export function changeVideo(vid_id) {
-  if ( side_player_window ) {
-    side_player_window.webContents.send('side-player/change-video',vid_id);
+  let w = windowManager.get('side-player');
+  if ( w ) {
+    w.object.webContents.send('side-player/change-video',vid_id);
   }
 }
