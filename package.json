@@ -61,7 +61,7 @@
     },
     "linux": {
       "icon": "build/icons",
-      "category": "Video"
+      "category": "AudioVideo"
     }
   },
   "dependencies": {
